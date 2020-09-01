@@ -107,18 +107,29 @@ public class Oblig1 {
     }
 
     //Oppgave 10: Inneholdt
-    public static boolean inneholdt(String a, String b){
-        if(a.isEmpty())
+    public static boolean inneholdt(String a, String b) {
+        if (a.isBlank())
             return true; //Hvis a er en tom streng så returnerer den sant ihenhold til oppgaven
 
-        if(a.length() > b.length())
+        if (a.length() > b.length())
             return false; //Hvis a er lenger enn b så kan den umulig være inneholdt i b
 
+        char[] charrayA = a.toCharArray(); //Konverterer a til en liste av char
+        char[] charrayB = b.toCharArray(); //Konverterer b til en liste av char
 
-
-        return false; //<--- Endre på returnert variabel når du har programmert ferdig.
+        for (char character : charrayA) { //For hvert bokstav i streng a
+            for (int i = 0; i < charrayB.length; i++) { //Søk igjennom hvert bokstav i streng b
+                if (character == charrayB[i]) { //Dersom noen av dem er like
+                    charrayB[i] = ' '; //Overskriv den bokstaven med en tom char for å unngå duplikat-problemer
+                    break; //Hopp ut av loopen og start på neste bokstav i streng a
+                }
+                if (i == b.length() - 1) { //Dersom et bokstav ikke eksisterer i a ikke eksisterer i b
+                    return false; //Hopp ut av hele metoden og returner false
+                }
+            }
+        }
+        return true; //Dersom koden over kjører uten problemerer så må a være inneholdt i b returner true
     }
-
     //Andre hjelpemetoder under:
     //---------------------------
     /*
@@ -152,7 +163,6 @@ public class Oblig1 {
             if(v < h) //Sjekker om venstre og høyre-peker har passert hverandre
                 bytt(a, v++, h--); //Bytt plass deretter øk venstre og minsker høyre pivot
         }
-
         quicksort(a, begin, v-1); //Rekursivt quicksort på venstre subliste
         quicksort(a, v+1, end); //Rekusivt quicksort på høyre subliste
     }
