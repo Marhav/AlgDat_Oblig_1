@@ -65,12 +65,9 @@ public class Oblig1 {
         int h = a.length - 1; //Initierer høyre-peker
 
         while(v <= h){ //Så lenge pekerne ikke er på samme plass eller har passert hverandre under:
-            while(v <=h && (a[v] % 2 == 1 || a[v] % 2 == -1)) v++; //Flytter venstre-peker mot høyre til den finner et
-            // partall
-            while(v <=h && a[h] % 2 == 0) h--; //Flytter høyre-peker mot venstre til den finner et oddetall
-
-            if(v < h)
-                bytt(a, v++, h--); //Dersom de ikke har passert hverandre så bytt plass og flytt på begge
+            while(v <=h && (a[v] % 2 == 1 || a[v] % 2 == -1)) v++; //Flytter v mot høyre til den finner et partall
+            while(v <=h && a[h] % 2 == 0) h--; //Flytter hø mot venstre til den finner et oddetall
+            if(v < h) bytt(a, v++, h--); //Dersom de ikke har passert hverandre så bytt plass og flytt på begge
         }
 
         quicksort(a, 0, v-1); //Kjører quicksort metoden på oddetallene.
@@ -118,34 +115,34 @@ public class Oblig1 {
         char[] charrayA = a.toCharArray(); //Konverterer a til en liste av char
         char[] charrayB = b.toCharArray(); //Konverterer b til en liste av char
 
-        for (char character : charrayA) { //For hvert bokstav i streng a
-            for (int i = 0; i < charrayB.length; i++) { //Søk igjennom hvert bokstav i streng b
-                if (character == charrayB[i]) { //Dersom noen av dem er like
-                    charrayB[i] = ' '; //Overskriv den bokstaven med en tom char for å unngå duplikat-problemer
-                    break; //Hopp ut av loopen og start på neste bokstav i streng a
-                }
-                if (i == b.length() - 1) { //Dersom et bokstav ikke eksisterer i a ikke eksisterer i b
-                    return false; //Hopp ut av hele metoden og returner false
-                }
-            }
-        }
-        return true; //Dersom koden over kjører uten problemerer så må a være inneholdt i b returner true
+        int[] intArray = new int[256]; //Lager en int liste for å telle bokstaver i String b
+
+        for(char character : charrayB) intArray[character]++; //Legger til antall bokstaver i String b
+        for(char character : charrayA) intArray[character]--; //Legger fjerner antall bokstaver i String a
+        for(int integer : intArray) //Sjekker igjennom array
+            if(integer < 0) return false; //Er det noen som har blitt fjernet for mye returner false
+
+        return true; //Hvis det ikke er noen problem returner true
     }
-    //Andre hjelpemetoder under:
-    //---------------------------
+
+    /*---------------------------
+    Andre hjelpemetoder under:
+    ---------------------------*/
+
     /*
     Metoden under bytter plass mellom inteks i og indeks j
      */
-    public static void bytt(int[] a, int i, int j){
+    private static void bytt(int[] a, int i, int j){
         int temp = a[i]; //Midlertidig lagring av verdi på indeks i
         a[i] = a[j]; //Bytter verdi på indeks i med verdi på indeks j
         a[j] = temp; //Oppdaterer indeks j med midlertidig verdi
     }
 
     /*
-    Metoden under er en implementering av quicksort algoritmen
+    Metoden under er en implementering av quicksort algoritmen. Denne kan brukes for å sortere hvilken som helst int
+    array.
      */
-    public static void quicksort(int[] a, int begin, int end){
+    private static void quicksort(int[] a, int begin, int end){
         if(begin >= end) return; //Avslutter rekursjon
 
         int v = begin; //Initialiserer venstre-peker
@@ -169,5 +166,4 @@ public class Oblig1 {
         quicksort(a, begin, v-1); //Kjør quicksort rekursivt på venstre subliste.
         quicksort(a, v+1, end); //Kjør quicksort rekursivt på høyre subliste.
     }
-
 }
