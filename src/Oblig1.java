@@ -65,15 +65,16 @@ public class Oblig1 {
         int h = a.length - 1; //Initierer høyre-peker
 
         while(v <= h){ //Så lenge pekerne ikke er på samme plass eller har passert hverandre under:
-            while(v <=h && a[v] % 2 == 1) v++; //Flytter venstre-peker mot høyre til den finner et partall
+            while(v <=h && (a[v] % 2 == 1 || a[v] % 2 == -1)) v++; //Flytter venstre-peker mot høyre til den finner et
+            // partall
             while(v <=h && a[h] % 2 == 0) h--; //Flytter høyre-peker mot venstre til den finner et oddetall
 
-            if(v <= h)
+            if(v < h)
                 bytt(a, v++, h--); //Dersom de ikke har passert hverandre så bytt plass og flytt på begge
         }
-        //Når partisjonen er over skal venstre-peker peke på det første partallet i listen.
-        quicksort(a, 0, v-1); //Sorter alle oddetallene med quicksort
-        quicksort(a, v, a.length-1); //Sorter alle partallene med quicksort
+
+        quicksort(a, 0, v-1);
+        quicksort(a, v, a.length-1);
     }
 
     //Oppgave5: Rotasjon
@@ -135,7 +136,7 @@ public class Oblig1 {
     /*
     Metoden under bytter plass mellom inteks i og indeks j
      */
-    private static void bytt(int[] a, int i, int j){
+    public static void bytt(int[] a, int i, int j){
         int temp = a[i]; //Midlertidig lagring av verdi på indeks i
         a[i] = a[j]; //Bytter verdi på indeks i med verdi på indeks j
         a[j] = temp; //Oppdaterer indeks j med midlertidig verdi
@@ -144,26 +145,28 @@ public class Oblig1 {
     /*
     Metoden under er en implementering av quicksort algoritmen
      */
-    private static void quicksort(int[] a, int begin, int end){
-        int v = begin; //Initialiserer venstre-peker;
-        int h = end; //Initialiserer høyre-peker;
+    public static void quicksort(int[] a, int begin, int end){
+        if(begin >= end) return; //Avslutter rekursjon
 
-        if(v >= h) return; //Hopp ut av metoden dersom sublisten inneholder ingen eller ett element.
+        int v = begin; //Initialiserer venstre-peker
+        int h = end; //Initialiserer høyre-peker
 
-        int m = (v + h)/2; //Finner midt-indeksen
-        int pivot = a[m]; //Velger midtverdien som pivot
+        int m = (v+h)/2; //Finner midt-indeksen
+        int pivot = a[m]; //Henter pivot
 
-        bytt(a, v, m); //Bytt sett pivot på starten av listen
+        bytt(a, m, h--); //Setter bytter pivot og sluttverdien i listen for safe-keeping
 
-        //Partisjoner listen
+        //Partisjonerer listen med pivot som skilleverdi
         while(v <= h){
-            while(v <= h && a[v] < pivot) v++; //Øker venstre-peker dersom venstre verdi er lavere enn pivot
-            while(v <= h && a[h] >= pivot) h--; //Minsker høyre-peker dersom høyre verdi er høyere eller lik pivot
-
-            if(v < h) //Sjekker om venstre og høyre-peker har passert hverandre
-                bytt(a, v++, h--); //Bytt plass deretter øk venstre og minsker høyre pivot
+            while(v <= h && a[v] < pivot) v++;
+            while(v <= h && a[h] >= pivot) h--;
+            if(v < h) bytt(a, v, h);
         }
-        quicksort(a, begin, v-1); //Rekursivt quicksort på venstre subliste
-        quicksort(a, v+1, end); //Rekusivt quicksort på høyre subliste
+
+        bytt(a, v, end);
+
+        quicksort(a, begin, v-1);
+        quicksort(a, v+1, end);
     }
+
 }
