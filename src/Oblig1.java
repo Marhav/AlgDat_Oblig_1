@@ -73,8 +73,8 @@ public class Oblig1 {
                 bytt(a, v++, h--); //Dersom de ikke har passert hverandre så bytt plass og flytt på begge
         }
 
-        quicksort(a, 0, v-1);
-        quicksort(a, v, a.length-1);
+        quicksort(a, 0, v-1); //Kjører quicksort metoden på oddetallene.
+        quicksort(a, v, a.length-1); //Kjører quicksort metoden på partallene.
     }
 
     //Oppgave5: Rotasjon
@@ -157,16 +157,17 @@ public class Oblig1 {
         bytt(a, m, h--); //Setter bytter pivot og sluttverdien i listen for safe-keeping
 
         //Partisjonerer listen med pivot som skilleverdi
-        while(v <= h){
-            while(v <= h && a[v] < pivot) v++;
-            while(v <= h && a[h] >= pivot) h--;
-            if(v < h) bytt(a, v, h);
+        while(v <= h){ //Så lenge v og h ikke har passert hverandre kjør koden under.
+            while(v <= h && a[v] < pivot) v++; //Inkrementer v per betingelse
+            while(v <= h && a[h] >= pivot) h--; //Dekrementerer h per betingelse
+            if(v < h) bytt(a, v++, h--); //Bytt dersom v og h ikke står på samme plass eller har passert hverandre
         }
 
-        bytt(a, v, end);
+        //venstre-peker skal nå stå på første tallet der alle verdier er større enn pivot.
+        bytt(a, v, end); //Bytt tilbake pivot verdi, v er nå pivot sin indeks.
 
-        quicksort(a, begin, v-1);
-        quicksort(a, v+1, end);
+        quicksort(a, begin, v-1); //Kjør quicksort rekursivt på venstre subliste.
+        quicksort(a, v+1, end); //Kjør quicksort rekursivt på høyre subliste.
     }
 
 }
