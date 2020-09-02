@@ -76,17 +76,40 @@ public class Oblig1 {
 
     //Oppgave5: Rotasjon
     public static void rotasjon(char[] a){
+        //HELENE:
+        for (int i=0; i<a.length; i++){ //Løper gjennom arrayet
+            bytt(a, i, a.length-1); //For hver a[i] bytter man plass med tallet på slutten av arrayet.
+        }
+
 
     }
 
     //Oppgave6: Roter flere plasser
     public static void rotasjon(char[] a, int k){
+        //HELENE:
+        for (int i=0; i<a.length-k; i++){ //Kjører
+            for (int j=a.length-1; j>=0;j--){
+                bytt(a, j, a.length-1);
+            }
+        }
+
 
     }
 
     //Oppgave 7a): Fletting
     public static String flett(String s, String t){
-        return null; //<--- Endre på returnert variabel når du har programmert ferdig.
+        StringBuilder a=new Stringbuilder();
+        for (int i=0; i<s.length()||i<t.length(); i++){
+            if (i<s.length()){
+                a.append(s.charAt(i));
+            }
+            if (i<t.length()){
+                a.append(t.charAt(i));
+            }
+        }
+
+        return a.toString();
+
     }
 
     //Oppgave 7b): Fletting
