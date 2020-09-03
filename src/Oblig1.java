@@ -77,6 +77,9 @@ public class Oblig1 {
     //Oppgave5: Rotasjon
     public static void rotasjon(char[] a){
         //HELENE:
+        int lengde=a.length;
+        if(lengde<2) return; //Om arrayet er tomt eller har en verdi trenger det ikke å roteres
+
         for (int i=0; i<a.length; i++){ //Løper gjennom arrayet
             bytt(a, i, a.length-1); //For hver a[i] bytter man plass med tallet på slutten av arrayet.
         }
@@ -85,20 +88,27 @@ public class Oblig1 {
     }
 
     //Oppgave6: Roter flere plasser
+    /*
+    Kunne plassert koden over i en for-loop som kjører k ganger for å få til flere rotasjoner,
+    men velger å effektivisere koden da den over er mindre effektiv om man skal rotere mange plasser.
+     */
     public static void rotasjon(char[] a, int k){
         //HELENE:
-        for (int i=0; i<a.length-k; i++){ //Kjører
-            for (int j=a.length-1; j>=0;j--){
-                bytt(a, j, a.length-1);
-            }
-        }
+        int lengde=a.length;
+
+        if ((k %= lengde)<0) k+=lengde;   //Sjekker om arrayet skal roteres mot venstre.
+
+        for (int v=0, h=lengde-1; v<h; bytt(a, v++,h--));      //Snur a[a:n>
+        for (int v=0, h=k-1; v<h; bytt(a, v++,h--));           //Snur a[0,k>
+        for (int v=k, h=lengde-1; v<h; bytt(a, v++,h--));      //Snur a[d:n>
+
 
 
     }
 
     //Oppgave 7a): Fletting
     public static String flett(String s, String t){
-        StringBuilder a=new Stringbuilder();
+        StringBuilder a=new StringBuilder();
         for (int i=0; i<s.length()||i<t.length(); i++){
             if (i<s.length()){
                 a.append(s.charAt(i));
@@ -159,6 +169,15 @@ public class Oblig1 {
         int temp = a[i]; //Midlertidig lagring av verdi på indeks i
         a[i] = a[j]; //Bytter verdi på indeks i med verdi på indeks j
         a[j] = temp; //Oppdaterer indeks j med midlertidig verdi
+    }
+
+    /*
+    Metoden under bytter plass mellom indeks i og index j i et char-array
+     */
+    private static void bytt(char[] a, int i, int j){
+        char temp=a[i];
+        a[i]=a[j];
+        a[j]=temp;
     }
 
     /*
