@@ -50,12 +50,34 @@ public class Oblig1 {
 
     //Oppgave2: Antall ulike (sortert)
     public static int antallUlikeSortert(int[] a){
-        return 0; //<--- Endre på returnert variabel når du har programmert ferdig.
+
+        int teller = a.length;
+
+        for(int i = 0; i<a.length-1; i++){
+            if(a[i]==a[i+1]){
+                teller = teller - 1;
+            }else if(a[i]>a[i+1]){
+                throw new IllegalStateException("Tabellen er usortert");
+            }
+        }
+
+        return teller;
     }
 
     //Oppgave3: Antall ulike (usortert)
     public static int antallUlikeUsortert(int [] a){
-        return 0; //<--- Endre på returnert variabel når du har programmert ferdig.
+
+        int teller = a.length;
+
+        for(int i = 0; i<a.length; i++){
+            for(int j = i+1; j<a.length; j++){
+                if (a[i] == a[j]) {
+                    teller = teller - 1;
+                    break;
+                }
+            }
+        }
+        return teller;
     }
 
     //Oppgave4: Delsortering
@@ -96,7 +118,26 @@ public class Oblig1 {
 
     //Oppgave 8: Indeks-sortering
     public static int[] indekssortering(int[] a){
-        return null; //<--- Endre på returnert variabel når du har programmert ferdig.
+        int[] indexArray = new int[a.length];
+        int[] ht = a.clone();
+
+        for(int i = 0; i<indexArray.length; i++){
+            indexArray[i] = i;
+        }
+        int temp;
+        for(int i = 0; i<a.length-1; i++){
+            for(int j = 0; j<a.length-i-1 ; j++){
+                if(ht[j]>ht[j+1]){
+                    temp = ht[j];
+                    ht[j] = ht[j+1];
+                    ht[j+1] = temp;
+                    temp = indexArray[j];
+                    indexArray[j] = indexArray[j+1];
+                    indexArray[j+1] = temp;
+                }
+            }
+        }
+        return indexArray;
     }
 
     //Oppgave 9: Tredje minste tall
