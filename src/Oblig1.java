@@ -87,7 +87,7 @@ public class Oblig1 {
         int h = a.length - 1; //Initierer høyre-peker
 
         while(v <= h){ //Så lenge pekerne ikke er på samme plass eller har passert hverandre under:
-            while(v <=h && (a[v] % 2 == 1 || a[v] % 2 == -1)) v++; //Flytter v mot høyre til den finner et partall
+            while(v <=h && (a[v] % 2 != 0)) v++; //Flytter v mot høyre til den finner et partall
             while(v <=h && a[h] % 2 == 0) h--; //Flytter hø mot venstre til den finner et oddetall
             if(v < h) bytt(a, v++, h--); //Dersom de ikke har passert hverandre så bytt plass og flytt på begge
         }
