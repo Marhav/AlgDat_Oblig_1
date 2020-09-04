@@ -206,7 +206,7 @@ public class Oblig1 {
             }
         }
 
-        return new int[]{minsteVerdi, nestMinsteVerdi, nestNestMinsteVerdi};
+        return new int[]{indeks0, indeks1, indeks2};
     }
 
 
