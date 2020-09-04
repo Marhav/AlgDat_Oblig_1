@@ -1,5 +1,12 @@
-import java.util.Arrays;
 import java.util.NoSuchElementException;
+
+/*
+Oppgave løst av følgende studenter:
+- Uy Quoc Nguyen, s341864, s341864@oslomet.no
+- Marius Havnaas, s341877, s341877@oslomet.no
+- Ruben Sønstabø Johanssen, s341851, s341851@oslomet.no
+- Helene Birkeflet Prescott, s341873, s341873@oslomet.no
+ */
 
 public class Oblig1 {
     private Oblig1(){} //Stanser instansiering av klasse.
