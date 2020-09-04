@@ -142,8 +142,73 @@ public class Oblig1 {
 
     //Oppgave 9: Tredje minste tall
     public static int[] tredjeMin(int[] a){
-        return null; //<--- Endre på returnert variabel når du har programmert ferdig.
+
+        if (a.length < 3) //Dersom a har færre enn 3 elementer, kast avvik
+            throw new NoSuchElementException("Tabellen er tom eller for liten for 3 tall");
+
+        int indeks0 = 0; //Initialiserer indeks for første min verdi
+        int indeks1 = 1; //Initialiserer indeks for andre min verdi
+        int indeks2 = 2; //Initialiserer indeks for tredje min verdi
+
+
+        if (a[0] > a[1])
+            if (a[1] > a[2]) {
+                indeks0 = 2;
+                indeks2 = 0;
+            } else {
+                indeks0 = 1;
+                if (a[0] > a[2]) {
+                    indeks1 = 2;
+                    indeks2 = 0;
+                } else {
+                    indeks1 = 0;
+                }
+            }
+        else if (a[1] > a[2]) {
+            indeks2 = 1;
+            if (a[2] > a[0]) {
+                indeks1 = 2;
+            } else {
+                indeks0 = 2;
+                indeks1 = 0;
+            }
+        }
+
+        int minsteVerdi = a[indeks0];
+        int nestMinsteVerdi = a[indeks1];
+        int nestNestMinsteVerdi = a[indeks2];
+
+        for (int i = 3; i < a.length; i++) {
+            if (a[i] < nestNestMinsteVerdi) {
+                if (a[i] < nestMinsteVerdi) {
+                    if (a[i] < minsteVerdi) {
+                        indeks2 = indeks1;
+                        indeks1 = indeks0;
+                        indeks0 = i;
+
+                        minsteVerdi = a[indeks0];
+                        nestMinsteVerdi = a[indeks1];
+                        nestNestMinsteVerdi = a[indeks2];
+                    }
+                    else {
+                        indeks2 = indeks1;
+                        indeks1 = i;
+
+                        nestMinsteVerdi = a[indeks1];
+                        nestNestMinsteVerdi = a[indeks2];
+                    }
+                }
+                else {
+                    indeks2 = i;
+
+                    nestNestMinsteVerdi = a[indeks2];
+                }
+            }
+        }
+
+        return new int[]{minsteVerdi, nestMinsteVerdi, nestNestMinsteVerdi};
     }
+
 
     //Oppgave 10: Inneholdt
     public static boolean inneholdt(String a, String b) {
