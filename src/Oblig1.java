@@ -1,5 +1,12 @@
-import java.util.Arrays;
 import java.util.NoSuchElementException;
+
+/*
+Oppgave løst av følgende studenter:
+- Uy Quoc Nguyen, s341864, s341864@oslomet.no
+- Marius Havnaas, s341877, s341877@oslomet.no
+- Ruben Sønstabø Johanssen, s341851, s341851@oslomet.no
+- Helene Birkeflet Prescott, s341873, s341873@oslomet.no
+ */
 
 public class Oblig1 {
     private Oblig1(){} //Stanser instansiering av klasse.
@@ -50,12 +57,34 @@ public class Oblig1 {
 
     //Oppgave2: Antall ulike (sortert)
     public static int antallUlikeSortert(int[] a){
-        return 0; //<--- Endre på returnert variabel når du har programmert ferdig.
+
+        int teller = a.length;
+
+        for(int i = 0; i<a.length-1; i++){
+            if(a[i]==a[i+1]){
+                teller = teller - 1;
+            }else if(a[i]>a[i+1]){
+                throw new IllegalStateException("Tabellen er usortert");
+            }
+        }
+
+        return teller;
     }
 
     //Oppgave3: Antall ulike (usortert)
     public static int antallUlikeUsortert(int [] a){
-        return 0; //<--- Endre på returnert variabel når du har programmert ferdig.
+
+        int teller = a.length;
+
+        for(int i = 0; i<a.length; i++){
+            for(int j = i+1; j<a.length; j++){
+                if (a[i] == a[j]) {
+                    teller = teller - 1;
+                    break;
+                }
+            }
+        }
+        return teller;
     }
 
     //Oppgave4: Delsortering
@@ -65,7 +94,7 @@ public class Oblig1 {
         int h = a.length - 1; //Initierer høyre-peker
 
         while(v <= h){ //Så lenge pekerne ikke er på samme plass eller har passert hverandre under:
-            while(v <=h && (a[v] % 2 == 1 || a[v] % 2 == -1)) v++; //Flytter v mot høyre til den finner et partall
+            while(v <=h && (a[v] % 2 != 0)) v++; //Flytter v mot høyre til den finner et partall
             while(v <=h && a[h] % 2 == 0) h--; //Flytter hø mot venstre til den finner et oddetall
             if(v < h) bytt(a, v++, h--); //Dersom de ikke har passert hverandre så bytt plass og flytt på begge
         }
@@ -148,13 +177,97 @@ public class Oblig1 {
 
     //Oppgave 8: Indeks-sortering
     public static int[] indekssortering(int[] a){
-        return null; //<--- Endre på returnert variabel når du har programmert ferdig.
+        int[] indexArray = new int[a.length];
+        int[] ht = a.clone();
+
+        for(int i = 0; i<indexArray.length; i++){
+            indexArray[i] = i;
+        }
+        int temp;
+        for(int i = 0; i<a.length-1; i++){
+            for(int j = 0; j<a.length-i-1 ; j++){
+                if(ht[j]>ht[j+1]){
+                    temp = ht[j];
+                    ht[j] = ht[j+1];
+                    ht[j+1] = temp;
+                    temp = indexArray[j];
+                    indexArray[j] = indexArray[j+1];
+                    indexArray[j+1] = temp;
+                }
+            }
+        }
+        return indexArray;
     }
 
     //Oppgave 9: Tredje minste tall
     public static int[] tredjeMin(int[] a){
-        return null; //<--- Endre på returnert variabel når du har programmert ferdig.
+
+        if (a.length < 3) //Dersom a har færre enn 3 elementer, kast avvik
+            throw new NoSuchElementException("Tabellen er tom eller for liten for 3 tall");
+
+        int indeks0 = 0; //Initialiserer indeks for første min verdi
+        int indeks1 = 1; //Initialiserer indeks for andre min verdi
+        int indeks2 = 2; //Initialiserer indeks for tredje min verdi
+
+
+        if (a[0] > a[1])
+            if (a[1] > a[2]) {
+                indeks0 = 2;
+                indeks2 = 0;
+            } else {
+                indeks0 = 1;
+                if (a[0] > a[2]) {
+                    indeks1 = 2;
+                    indeks2 = 0;
+                } else {
+                    indeks1 = 0;
+                }
+            }
+        else if (a[1] > a[2]) {
+            indeks2 = 1;
+            if (a[2] > a[0]) {
+                indeks1 = 2;
+            } else {
+                indeks0 = 2;
+                indeks1 = 0;
+            }
+        }
+
+        int minsteVerdi = a[indeks0];
+        int nestMinsteVerdi = a[indeks1];
+        int nestNestMinsteVerdi = a[indeks2];
+
+        for (int i = 3; i < a.length; i++) {
+            if (a[i] < nestNestMinsteVerdi) {
+                if (a[i] < nestMinsteVerdi) {
+                    if (a[i] < minsteVerdi) {
+                        indeks2 = indeks1;
+                        indeks1 = indeks0;
+                        indeks0 = i;
+
+                        minsteVerdi = a[indeks0];
+                        nestMinsteVerdi = a[indeks1];
+                        nestNestMinsteVerdi = a[indeks2];
+                    }
+                    else {
+                        indeks2 = indeks1;
+                        indeks1 = i;
+
+                        nestMinsteVerdi = a[indeks1];
+                        nestNestMinsteVerdi = a[indeks2];
+                    }
+                }
+                else {
+                    indeks2 = i;
+
+                    nestNestMinsteVerdi = a[indeks2];
+                }
+            }
+        }
+
+        return new int[]{indeks0, indeks1, indeks2};
     }
+
 
     //Oppgave 10: Inneholdt
     public static boolean inneholdt(String a, String b) {
