@@ -98,17 +98,17 @@ public class Oblig1 {
 
         if ((k %= lengde)<0) k+=lengde;   //Sjekker om arrayet skal roteres mot venstre.
 
-        for (int v=0, h=lengde-1; v<h; bytt(a, v++,h--));      //Snur a[a:n>
+        for (int v=0, h=lengde-1; v<h; bytt(a, v++,h--));      //Snur a[a:lengde>
         for (int v=0, h=k-1; v<h; bytt(a, v++,h--));           //Snur a[0,k>
-        for (int v=k, h=lengde-1; v<h; bytt(a, v++,h--));      //Snur a[d:n>
-
-
+        for (int v=k, h=lengde-1; v<h; bytt(a, v++,h--));      //Snur a[k:lengde>
 
     }
 
     //Oppgave 7a): Fletting
     public static String flett(String s, String t){
+
         StringBuilder a=new StringBuilder();
+
         for (int i=0; i<s.length()||i<t.length(); i++){
             if (i<s.length()){
                 a.append(s.charAt(i));
@@ -124,7 +124,26 @@ public class Oblig1 {
 
     //Oppgave 7b): Fletting
     public static String flett(String... s){
-        return null; //<--- Endre på returnert variabel når du har programmert ferdig.
+
+        StringBuilder a = new StringBuilder();
+
+        //Finner den lengste stringen i arrayet og bruker den lengden som grense for j
+        int lengst = s[0].length();
+        for (int k = 0; k < s.length; k++) {
+            if (s[k].length() > lengst)
+                lengst = s[k].length();
+        }
+
+
+        for (int j = 0; j < lengst; j++) {
+            for (int i = 0; i < s.length; i++) {
+                if (j < s[i].length()) {            //Legger bare til neste bokstav om ordets lengde er mindre enn j(det er flere bokstaver igjen)
+                    a.append(s[i].charAt(j));       //Legger til char-en som ligger i ord i, posisjon j
+                }
+            }
+        }
+
+        return a.toString();
     }
 
     //Oppgave 8: Indeks-sortering
