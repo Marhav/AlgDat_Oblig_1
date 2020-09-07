@@ -105,7 +105,7 @@ public class Oblig1 {
 
     //Oppgave5: Rotasjon
     public static void rotasjon(char[] a){
-        //HELENE:
+
         int lengde=a.length;
         if(lengde<2) return; //Om arrayet er tomt eller har en verdi trenger det ikke å roteres
 
@@ -120,16 +120,21 @@ public class Oblig1 {
     /*
     Kunne plassert koden over i en for-loop som kjører k ganger for å få til flere rotasjoner,
     men velger å effektivisere koden da den over er mindre effektiv om man skal rotere mange plasser.
+
+    Snur først hele arrayet, så fra starten av arrayet til k, og så d length-k siste.
      */
     public static void rotasjon(char[] a, int k){
-        //HELENE:
         int lengde=a.length;
+        if (lengde<2){return;}
 
-        if ((k %= lengde)<0) k+=lengde;   //Sjekker om arrayet skal roteres mot venstre.
+        if ((k%=lengde)<0) k+=lengde;
 
-        for (int v=0, h=lengde-1; v<h; bytt(a, v++,h--));      //Snur a[a:lengde>
-        for (int v=0, h=k-1; v<h; bytt(a, v++,h--));           //Snur a[0,k>
-        for (int v=k, h=lengde-1; v<h; bytt(a, v++,h--));      //Snur a[k:lengde>
+        for(int v=0, h=lengde-1; v<h; bytt(a, v++, h--)); //Snur rekkefølgen på hele arrayet
+
+        for (int v=0, h=k-1; v<h; bytt(a, v++, h--));     //Snur rekkefølgen på den første delen av arrayet
+
+        for (int v=k, h=lengde-1; v<h; bytt(a, v++, h--));  //Snur rekkefølgen på de siste tallene i arrayet
+
 
     }
 
@@ -155,6 +160,9 @@ public class Oblig1 {
     public static String flett(String... s){
 
         StringBuilder a = new StringBuilder();
+
+
+        if (s.length==0){return "";}
 
         //Finner den lengste stringen i arrayet og bruker den lengden som grense for j
         int lengst = s[0].length();
