@@ -1,0 +1,12 @@
+Test resultat ved en vilkårlig kjøring av programmet:
+Totalt: 144 ms
+- Oppgave 1     1ms
+- Oppgave 2     1ms
+- Oppgave 3     3ms
+- Oppgave 4    49ms
+- Oppgave 5     1ms
+- Oppgave 6    31ms
+- Oppgave 7     1ms
+- Oppgave 8     3ms
+- Oppgave 9    19ms
+- Oppgave 10   35ms
